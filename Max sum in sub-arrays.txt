@@ -1,0 +1,66 @@
+Max sum in sub-arrays
+Difficulty: EasyAccuracy: 43.26%Submissions: 50K+Points: 2
+Given an array arr[], with 0-based indexing, select any two indexes, i and j such that i < j. From the subarray arr[i...j], select the two minimum numbers and add them, you will get the score for that subarray. Return the maximum possible score across all the subarrays of array arr[].
+
+Examples :
+
+Input : arr[] = [4, 3, 1, 5, 6]
+Output : 11
+Explanation : Subarrays with smallest and second smallest are:- [4, 3] smallest = 3,second smallest = 4
+[4, 3, 1] smallest = 1, second smallest = 3
+[4, 3, 1, 5] smallest = 1, second smallest = 3
+[4, 3, 1, 5, 6] smallest = 1, second smallest = 3
+[3, 1] smallest = 1, second smallest = 3
+[3, 1, 5] smallest = 1, second smallest = 3
+[3, 1, 5, 6] smallest = 1, second smallest = 3
+[1, 5] smallest = 1, second smallest = 5
+[1, 5, 6] smallest = 1, second smallest = 5
+[5, 6] smallest = 5, second smallest = 6
+Maximum sum among all above choices is, 5 + 6 = 11.
+Input : arr[] = [5, 4, 3, 1, 6] 
+Output : 9
+Expected Time Complexity: O(n)
+Expected Auxiliary Space: O(1)
+
+Constraints:
+2 ≤ arr.size ≤ 105
+1 ≤ arr[i] ≤ 106
+
+Solution-
+
+// User function Template for Java
+
+class Solution {
+
+    public static long pairWithMaxSum(long arr[], long N) {
+        // Your code goes here
+         // Edge case: If the array has fewer than 2 elements, return 0 (though the problem guarantees n >= 2)
+        if (N < 2) return 0;
+
+        // Initialize variables to track the two largest elements
+        long max1 = Long.MIN_VALUE, max2 = Long.MIN_VALUE;
+
+        // Iterate through the array
+        for (int i = 0; i < N - 1; i++) {
+            // Get the current pair
+            long first = arr[i];
+            long second = arr[i + 1];
+
+            // Ensure first is the smaller and second is the larger
+            if (first > second) {
+                long temp = first;
+                first = second;
+                second = temp;
+            }
+
+            // Update max1 and max2 if we find a larger pair sum
+            if (first + second > max1 + max2) {
+                max1 = first;
+                max2 = second;
+            }
+        }
+
+        // Return the sum of the two largest numbers found
+        return max1 + max2;
+    }
+}
